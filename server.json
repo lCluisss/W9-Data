@@ -1,0 +1,146 @@
+const express = require('express');
+const bodyParser = require('body-parser');
+const app = express();
+const port = 3000;
+
+const { jsonData } = require('./jsonData');
+const { xmlData } = require('./xmlData');
+
+app.use(bodyParser.json());
+
+app.get('/api/json', (req, res) => {
+    res.json(jsonData);
+});
+
+app.get('/api/xml', (req, res) => {
+    res.set('Content-Type', 'text/xml');
+    res.send(xmlData);
+});
+
+app.listen(port, () => {
+    console.log(`Microservice running at http://localhost:${port}`);
+});
+
+
+
+const xmlData = `
+    <Catalog>
+        <Product ProductID="101">
+            <Name>Smartphone</Name>
+            <Category>Electronics</Category>
+            <Price>299.99</Price>
+            <Stock>25</Stock>
+            <Description>A very good smartphone</Description>
+        </Product>
+        <Product ProductID="102">
+            <Name>PC</Name>
+            <Category>Electronics</Category>
+            <Price>799.99</Price>
+            <Stock>15</Stock>
+            <Description>A very good pc</Description>
+        </Product>
+    </Catalog>`;
+
+    module.exports = { xmlData };
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assesment task 9</title>
+</head>
+<body>
+
+    <p id="product_name"></p>
+
+    <script src="jsonData.js"></script>
+    <script src="xmlData.js"></script>
+    <script>
+        
+    </script>
+</body>
+</html>
+
+const jsonData = {
+    "Catalog": {
+        "Products": [
+            {
+                "ProductID": "101",
+                "Name": "Smartphone",
+                "Category": "Electronics",
+                "Price": 299.99,
+                "Stock": 25,
+                "Description": "A very good smartphone"
+            },
+            {
+                "ProductID": "102",
+                "Name": "PC",
+                "Category": "Electronics",
+                "Price": 799.99,
+                "Stock": 15,
+                "Description": "A very good pc"
+            }
+        ]
+    }
+};
+
+module.exports = { jsonData };
+
+
+const express = require('express');
+const bodyParser = require('body-parser');
+const app = express();
+const port = 3000;
+
+app.use(bodyParser.json());
+
+app.get('/api/json', (req, res) => {
+    const jsonData = {
+        "Catalog": {
+            "Products": [
+                {
+                    "ProductID": "101",
+                    "Name": "Smartphone",
+                    "Category": "Electronics",
+                    "Price": 299.99,
+                    "Stock": 25
+                },
+                {
+                    "ProductID": "102",
+                    "Name": "Laptop",
+                    "Category": "Electronics",
+                    "Price": 799.99,
+                    "Stock": 15
+                }
+            ]
+        }
+    };
+    res.json(jsonData);
+});
+
+app.get('/api/xml', (req, res) => {
+    res.set('Content-Type', 'text/xml');
+    const xmlData = `
+    <Catalog>
+        <Product ProductID="101">
+            <Name>Smartphone</Name>
+            <Category>Electronics</Category>
+            <Price>299.99</Price>
+            <Stock>25</Stock>
+        </Product>
+        <Product ProductID="102">
+            <Name>Laptop</Name>
+            <Category>Electronics</Category>
+            <Price>799.99</Price>
+            <Stock>15</Stock>
+        </Product>
+    </Catalog>`;
+    res.send(xmlData);
+});
+
+app.listen(port, () => {
+    console.log(`Microservice running at http://localhost:${port}`);
+});
+
